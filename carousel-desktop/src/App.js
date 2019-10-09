@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Card from "./Card";
+import { PIXABAY_URL } from "./Constants";
 
 // class component
 class App extends Component {
@@ -11,10 +12,11 @@ class App extends Component {
       property: {},
       ind: 0
     };
+  }
+
+  fetchImages() {
     //Fetch data from url
-    fetch(
-      "https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo"
-    )
+    fetch(PIXABAY_URL)
       .then(response => response.json())
       .then(responseJson => {
         console.log("res " + responseJson.hits[0]);
@@ -30,6 +32,9 @@ class App extends Component {
       });
   }
 
+  componentDidMount() {
+    this.fetchImages();
+  }
   //Next button action
   nextProperty = () => {
     const newIndex = this.state.ind + 1;
