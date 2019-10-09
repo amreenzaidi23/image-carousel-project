@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Card from "./Card";
+import { PIXABAY_URL } from "./Constants";
 
 class App extends Component {
   //Set default value for property
@@ -11,15 +12,15 @@ class App extends Component {
       property: {},
       ind: 0
     };
-    //fetch the data from url
-    fetch(
-      "https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo"
-    )
+  }
+  fetchImages() {
+    //Fetch data from url
+    fetch(PIXABAY_URL)
       .then(response => response.json())
       .then(responseJson => {
         console.log("res " + responseJson.hits[0]);
         console.log("res " + responseJson.hits);
-        //seting the state from response
+
         this.setState({
           properties: responseJson.hits,
           property: responseJson.hits[0]
@@ -28,6 +29,10 @@ class App extends Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentDidMount() {
+    this.fetchImages();
   }
 
   //This function is use to perform the next button
